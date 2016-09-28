@@ -16,7 +16,9 @@ var gfs;
 var Grid = require("gridfs-stream");
 Grid.mongo = mongoose.mongo;
 
-var port = process.env.PORT || 8080;
+// set the port of our application
+// process.env.PORT lets the port be set by Heroku
+var port = process.env.PORT || 3000;
 
 conn.once("open", function(){
   gfs = Grid(conn.db);
@@ -70,7 +72,7 @@ app.set("views", "./views");
 
 
 if (!module.parent) {
-  app.listen(port, function(){
-	  console.log('Our app is running on port:' + port);
-  });
+  app.listen(port, function() {
+    console.log('Our app is running on http://localhost:' + port);
+	});
 }
