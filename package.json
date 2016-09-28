@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-		"start": "node index.js"
-},
+    "start": "node index.js"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -13,6 +13,7 @@
     "express": "^4.14.0",
     "gridfs-stream": "^1.1.1",
     "mongoose": "^4.6.1",
-    "multer": "^1.2.0"
+    "multer": "^1.2.0",
+    "shortid": "^2.2.6"
   }
 }

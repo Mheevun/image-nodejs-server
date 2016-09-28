@@ -16,6 +16,8 @@ var gfs;
 var Grid = require("gridfs-stream");
 Grid.mongo = mongoose.mongo;
 
+var shortid = require('shortid');
+
 
 
 conn.once("open", function(){
@@ -28,15 +30,23 @@ conn.once("open", function(){
   //second parameter is multer middleware.
   app.post("/", upload.single("avatar"), function(req, res, next){
     //create a gridfs-stream into which we pipe multer's temporary file saved in uploads. After which we delete multer's temp file.
+	var fileid = shortid.generate();
     var writestream = gfs.createWriteStream({
-      filename: req.file.originalname
+		filename: fileid
+      //filename: req.file.originalname
     });
     //
     // //pipe multer's temp file /uploads/filename into the stream we created above. On end deletes the temporary file.
     fs.createReadStream("./uploads/" + req.file.filename)
-      .on("end", function(){fs.unlink("./uploads/"+ req.file.filename, function(err){res.send("success")})})
-        .on("err", function(){res.send("Error uploading image")})
-          .pipe(writestream);
+      .on("end", function(){
+		  fs.unlink("./uploads/"+ req.file.filename, function(err){
+			  	res.location(fileid)
+				res.sendStatus(201)
+			  })
+	  })
+      .on("err", function(){res.send("Error uploading image")})
+	  .pipe(writestream);
+
   });
 
   // sends the image we saved by filename.
