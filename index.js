@@ -40,8 +40,12 @@ conn.once("open", function(){
     fs.createReadStream("./uploads/" + req.file.filename)
       .on("end", function(){
 		  fs.unlink("./uploads/"+ req.file.filename, function(err){
-			  	res.location(fileid)
-				res.sendStatus(201)
+			  	//res.location(fileid)
+				//res.sendStatus(201)
+				res.statusCode = 201;
+				res.json({
+					objectId: fileid 
+				});
 			  })
 	  })
       .on("err", function(){res.send("Error uploading image")})
