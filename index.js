@@ -16,6 +16,8 @@ var gfs;
 var Grid = require("gridfs-stream");
 Grid.mongo = mongoose.mongo;
 
+var port = process.env.PORT || 8080;
+
 conn.once("open", function(){
   gfs = Grid(conn.db);
   app.get("/", function(req,res){
@@ -68,5 +70,7 @@ app.set("views", "./views");
 
 
 if (!module.parent) {
-  app.listen(3000);
+  app.listen(port, function(){
+	  console.log('Our app is running on port:' + port);
+  });
 }
